@@ -24,10 +24,19 @@ A minimal programming language interpreter written in Go.
 
 ```bash
 go run main.go
-```
-
-## Testing
-
-```bash
 go test ./...
 ```
+
+## Implementation
+
+### Parser
+
+Mini-lang implements recursive descent parser (Pratt Parsing)
+
+## Todo
+
+- Add line number to error messages
+
+## Acknowledgements
+
+- [Writng an Interpreter in Go](https://interpreterbook.com/)
