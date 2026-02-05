@@ -56,3 +56,8 @@ go test ./...
 ## Related Projects
 
 This is part of the [mini-systems](../) collection - small implementations of foundational software systems built for learning and exploration.
+
+## Resources
+
+- [Writing An Interpreter In Go](https://interpreterbook.com/) by Thorsten Ball
+- [Pratt Parsing](https://en.wikipedia.org/wiki/Pratt_parser) by Wikipedia
