@@ -1,0 +1,23 @@
+# mini-lang justfile
+
+# Show available commands
+default:
+    @just --list
+
+# ---- Development ----
+
+# Start backend server
+@run:
+    go run main.go
+
+# Start backend server (alias)
+@fmt:
+    go fmt ./...
+
+# Build backend binary
+@vet:
+    go vet ./...
+
+# Run tests
+@test:
+    go test ./...
