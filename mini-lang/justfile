@@ -6,15 +6,15 @@ default:
 
 # ---- Development ----
 
-# Start backend server
+# Run main.go
 @run:
     go run main.go
 
-# Start backend server (alias)
+# Format using go fmt
 @fmt:
     go fmt ./...
 
-# Build backend binary
+# Go vet
 @vet:
     go vet ./...
 

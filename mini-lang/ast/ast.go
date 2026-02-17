@@ -96,8 +96,8 @@ func (rs *ReturnStatement) String() string {
 }
 
 type ExpressionStatement struct {
-	Token       token.Token
-	ReturnValue Expression
+	Token      token.Token
+	Expression Expression
 }
 
 func (es *ExpressionStatement) statementNode()       {}
@@ -107,8 +107,8 @@ func (es *ExpressionStatement) String() string {
 
 	out.WriteString(es.TokenLiteral() + " ")
 
-	if es.ReturnValue != nil {
-		out.WriteString(es.ReturnValue.String())
+	if es.Expression != nil {
+		out.WriteString(es.Expression.String())
 	}
 
 	out.WriteString(";")
