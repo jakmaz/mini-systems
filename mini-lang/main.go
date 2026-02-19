@@ -14,5 +14,6 @@ func main() {
 	}
 	fmt.Printf("Hello %s! This is the minilang programming language!\n", user.Username)
 	fmt.Printf("Type in your code and press enter to run it.\n")
+	fmt.Printf("Use /tokens, /parse and /eval to switch between modes\n")
 	repl.Start(os.Stdin, os.Stdout)
 }
