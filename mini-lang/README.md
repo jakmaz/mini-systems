@@ -16,11 +16,10 @@ A minimal programming language interpreter written in Go, exploring parsing, eva
 - **Return Statements** - Explicit returns from functions
 - **Closures** - Functions that capture their environment
 
-## Sample Programs
-
-### Variables and Data Types
+## Sample Program
 
 ```javascript
+// Variables and data types
 let name = "mini-lang";
 let year = 2026;
 let tags = ["language", "programming", "coding"];
@@ -28,11 +27,8 @@ let recipe = {
   "name": "pancake",
   "cookTime": 15,
 };
-```
 
-### Functions and Closures
-
-```javascript
+// Functions and closures
 let cook = fn(recipe) {
     let name = recipe["name"];
     let time = recipe["cookTime"];
@@ -40,12 +36,8 @@ let cook = fn(recipe) {
 };
 
 cook(recipe);
-// prints: "Cooking Pancakes for 15 minutes"
-```
 
-### Recursion
-
-```javascript
+// Recursion
 let fibonacci = fn(x) {
   if (x == 0) {
     0
@@ -57,11 +49,8 @@ let fibonacci = fn(x) {
     }
   }
 };
-```
 
-### Higher-Order Functions
-
-```javascript
+// Higher-order functions
 let map = fn(arr, f) {
   let iter = fn(arr, accumulated) {
     if (len(arr) == 0) {
@@ -70,13 +59,11 @@ let map = fn(arr, f) {
       iter(rest(arr), push(accumulated, f(first(arr))));
     }
   };
-
   iter(arr, []);
 };
 
 let numbers = [1, 1 + 1, 4 - 1, 2 * 2, 2 + 3, 12 / 2];
-map(numbers, fibonacci);
-// returns: [1, 1, 2, 3, 5, 8]
+map(numbers, fibonacci);  // returns: [1, 1, 2, 3, 5, 8]
 ```
 
 ## Architecture
