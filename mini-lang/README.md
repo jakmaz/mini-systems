@@ -4,28 +4,79 @@ A minimal programming language interpreter written in Go, exploring parsing, eva
 
 ## Language Features
 
-- C-like syntax with variable bindings
-- Data types: integers, booleans, strings, arrays, hash maps
-- Arithmetic and boolean expressions
-- First-class and higher-order functions with closures
-- Built-in functions
+- **Integers** - Whole number arithmetic
+- **Booleans** - `true` and `false` with logical operators
+- **Strings** - Double-quoted text
+- **Arrays** - Ordered collections with index access
+- **Hashes** - Key-value maps with string keys
+- **Prefix, Infix, and Index Operators** - `-5`, `a + b`, `arr[0]`, `hash["key"]`
+- **Conditionals** - `if/else` expressions
+- **Global and Local Bindings** - `let` for variable declaration
+- **First-Class Functions** - Functions as values, higher-order functions
+- **Return Statements** - Explicit returns from functions
+- **Closures** - Functions that capture their environment
 
 ## Sample Programs
 
+### Variables and Data Types
+
 ```javascript
-// Variable bindings and arithmetic
-let x = 5;
-let y = x * 2 + 1;
+let recipe = "Pancakes";
+let ingredients = ["flour", "milk", "eggs", "butter"];
+let pancake = {
+  "servings": 4,
+  "cookTime": 15,
+  "difficulty": "easy"
+};
+```
 
-// Functions and closures
-let add = fn(a, b) { a + b };
-let makeAdder = fn(x) { fn(y) { x + y } };
-let addTwo = makeAdder(2);
-addTwo(3); // returns 5
+### Functions and Closures
 
-// Arrays and hash maps
-let arr = [1, 2, 3, 4];
-let person = {"name": "John", "age": 30};
+```javascript
+let cook = fn(recipe) {
+    let name = recipe["name"];
+    let time = recipe["cookTime"];
+    puts("Cooking " + name + " for " + time + " minutes");
+};
+
+cook(pancake);
+// => prints: "Cooking Pancakes for 15 minutes"
+```
+
+### Recursion
+
+```javascript
+let fibonacci = fn(x) {
+  if (x == 0) {
+    0
+  } else {
+    if (x == 1) {
+      return 1;
+    } else {
+      fibonacci(x - 1) + fibonacci(x - 2);
+    }
+  }
+};
+```
+
+### Higher-Order Functions
+
+```javascript
+let map = fn(arr, f) {
+  let iter = fn(arr, accumulated) {
+    if (len(arr) == 0) {
+      accumulated
+    } else {
+      iter(rest(arr), push(accumulated, f(first(arr))));
+    }
+  };
+
+  iter(arr, []);
+};
+
+let numbers = [1, 1 + 1, 4 - 1, 2 * 2, 2 + 3, 12 / 2];
+map(numbers, fibonacci);
+// => returns: [1, 1, 2, 3, 5, 8]
 ```
 
 ## Architecture
@@ -42,7 +93,11 @@ let person = {"name": "John", "age": 30};
 ```bash
 # Run REPL
 go run main.go
+```
 
+The REPL supports debugging modes: type `/tokens` to see lexer output, `/parse` to see the AST, or `/eval` to evaluate code.
+
+```bash
 # Run tests
 go test ./...
 ```
