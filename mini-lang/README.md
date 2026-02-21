@@ -21,12 +21,12 @@ A minimal programming language interpreter written in Go, exploring parsing, eva
 ### Variables and Data Types
 
 ```javascript
-let recipe = "Pancakes";
-let ingredients = ["flour", "milk", "eggs", "butter"];
-let pancake = {
-  "servings": 4,
+let name = "mini-lang";
+let year = 2026;
+let tags = ["language", "programming", "coding"];
+let recipe = {
+  "name": "pancake",
   "cookTime": 15,
-  "difficulty": "easy"
 };
 ```
 
@@ -39,8 +39,8 @@ let cook = fn(recipe) {
     puts("Cooking " + name + " for " + time + " minutes");
 };
 
-cook(pancake);
-// => prints: "Cooking Pancakes for 15 minutes"
+cook(recipe);
+// prints: "Cooking Pancakes for 15 minutes"
 ```
 
 ### Recursion
@@ -76,7 +76,7 @@ let map = fn(arr, f) {
 
 let numbers = [1, 1 + 1, 4 - 1, 2 * 2, 2 + 3, 12 / 2];
 map(numbers, fibonacci);
-// => returns: [1, 1, 2, 3, 5, 8]
+// returns: [1, 1, 2, 3, 5, 8]
 ```
 
 ## Architecture
