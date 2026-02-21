@@ -115,4 +115,5 @@ This is part of the [mini-systems](../) collection - small implementations of fo
 ## Resources
 
 - [Writing An Interpreter In Go](https://interpreterbook.com/) by Thorsten Ball
+- [Writing A Compiler In Go](https://compilerbook.com/) by Thorsten Ball
 - [Pratt Parsing](https://en.wikipedia.org/wiki/Pratt_parser) by Wikipedia
