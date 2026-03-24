@@ -20,14 +20,15 @@ const (
 )
 
 var precedences = map[token.TokenType]int{
-	token.EQ:    EQUALS,
-	token.NEQ:   EQUALS,
-	token.LT:    LESSGREATER,
-	token.GT:    LESSGREATER,
-	token.PLUS:  SUM,
-	token.MINUS: SUM,
-	token.DIV:   PRODUCT,
-	token.MUL:   PRODUCT,
+	token.EQ:     EQUALS,
+	token.NEQ:    EQUALS,
+	token.LT:     LESSGREATER,
+	token.GT:     LESSGREATER,
+	token.PLUS:   SUM,
+	token.MINUS:  SUM,
+	token.DIV:    PRODUCT,
+	token.MUL:    PRODUCT,
+	token.LPAREN: CALL,
 }
 
 type (
@@ -68,6 +69,7 @@ func New(l *lexer.Lexer) *Parser {
 	p.registerInfix(token.NEQ, p.parseInfixExpression)
 	p.registerInfix(token.LT, p.parseInfixExpression)
 	p.registerInfix(token.GT, p.parseInfixExpression)
+	p.registerInfix(token.LPAREN, p.parseCallExpression)
 
 	// Read two tokens, so curToken and peekToken are both set
 	p.nextToken()
@@ -343,6 +345,36 @@ func (p *Parser) parseFunctionParameters() []*ast.Identifier {
 	}
 
 	return idents
+}
+
+func (p *Parser) parseCallExpression(left ast.Expression) ast.Expression {
+	ce := &ast.CallExpression{Token: p.curToken, Function: left}
+	ce.Arguments = p.parseCallArguments()
+	return ce
+}
+
+func (p *Parser) parseCallArguments() []ast.Expression {
+	args := []ast.Expression{}
+
+	if p.peekTokenIs(token.RPAREN) {
+		p.nextToken()
+		return args
+	}
+
+	p.nextToken()
+	args = append(args, p.parseExpression(LOWEST))
+
+	for p.peekTokenIs(token.COMMA) {
+		p.nextToken()
+		p.nextToken()
+		args = append(args, p.parseExpression(LOWEST))
+	}
+
+	if !p.expectPeek(token.RPAREN) {
+		return nil
+	}
+
+	return args
 }
 
 // Check if peek is of a TokenType p.
