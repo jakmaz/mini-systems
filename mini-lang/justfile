@@ -1,5 +1,7 @@
 # mini-lang justfile
 
+set shell := ["nu", "-c"]
+
 # Show available commands
 default:
     @just --list
@@ -9,6 +11,10 @@ default:
 # Run main.go
 @run:
     go run main.go
+
+# Run main.go in watch mode (nushell)
+@dev:
+    watch . --glob="**/*.go" {just run}
 
 # Format using go fmt
 @fmt:
