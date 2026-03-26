@@ -91,7 +91,8 @@ func printEval(line string, out io.Writer) {
 		return
 	}
 
-	eval := evaluator.Eval(program).Inspect()
-
-	fmt.Fprintln(out, eval)
+	eval := evaluator.Eval(program)
+	if eval != nil {
+		fmt.Fprintln(out, eval.Inspect())
+	}
 }
