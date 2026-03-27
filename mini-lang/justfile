@@ -14,7 +14,7 @@ default:
 
 # Run main.go in watch mode (nushell)
 @dev:
-    watch . --glob="**/*.go" {just run}
+    watch . --glob="**/*.go" {|| just run}
 
 # Format using go fmt
 @fmt:
