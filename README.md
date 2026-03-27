@@ -8,13 +8,13 @@ Most projects are written in Go and are intentionally scoped to remain readable 
 
 ## Projects
 
-| Project           | Description                                                                                         | Status            |
-| ----------------- | --------------------------------------------------------------------------------------------------- | ----------------- |
-| **[mini-lang](mini-lang/)**     | A small interpreted programming language, built to explore parsing, evaluation, and language design | Building          |
-| **mini-git**      | A minimal implementation of Git's core data model (objects, trees, commits)                         | Planned          |
-| **mini-bash**     | A tiny Unix shell supporting command execution, pipes, and redirection                              | Planned          |
-| **mini-zip**      | A simple compression tool implementing classic compression algorithms                               | Planned          |
-| **mini-terminal** | A minimal terminal emulator exploring PTYs, ANSI escape sequences, and screen buffers               | Planned          |
+| Project                     | Description                                                                 | Status   |
+| --------------------------- | --------------------------------------------------------------------------- | -------- |
+| **[mini-lang](mini-lang/)** | A small interpreted programming language                                    | Building |
+| **[mini-git](mini-git/)**   | A minimal implementation of Git's core data model (objects, trees, commits) | Planned  |
+| **[mini-bash](mini-bash/)** | A tiny Unix shell supporting command execution, pipes, and redirection      | Planned  |
+| **[mini-zip](mini-zip/)**   | A simple compression tool implementing classic compression algorithms       | Planned  |
+| **[mini-term](mini-term/)** | A minimal terminal emulato                                                  | Planned  |
 
 > Each project lives in its own directory and is intentionally scoped to remain readable and focused.
 
