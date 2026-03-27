@@ -7,6 +7,7 @@ import (
 
 	"minilang/evaluator"
 	"minilang/lexer"
+	"minilang/object"
 	"minilang/parser"
 	"minilang/token"
 )
@@ -15,6 +16,7 @@ const PROMPT = "> "
 
 func Start(in io.Reader, out io.Writer) {
 	scanner := bufio.NewScanner(in)
+	env := object.NewEnvironment()
 	mode := "eval"
 
 	for {
@@ -36,7 +38,7 @@ func Start(in io.Reader, out io.Writer) {
 			fmt.Fprintln(out, "Mode: parse")
 			continue
 		case "/eval":
-			mode = "/eval"
+			mode = "eval"
 			fmt.Fprintln(out, "Mode: eval")
 			continue
 		}
@@ -48,7 +50,7 @@ func Start(in io.Reader, out io.Writer) {
 		case "parse":
 			printAST(line, out)
 		case "eval":
-			printEval(line, out)
+			printEval(line, out, env)
 		}
 	}
 }
@@ -77,7 +79,7 @@ func printAST(line string, out io.Writer) {
 	fmt.Fprintln(out, program.String())
 }
 
-func printEval(line string, out io.Writer) {
+func printEval(line string, out io.Writer, env *object.Environment) {
 	l := lexer.New(line)
 	p := parser.New(l)
 	program := p.ParseProgram()
@@ -91,7 +93,7 @@ func printEval(line string, out io.Writer) {
 		return
 	}
 
-	eval := evaluator.Eval(program)
+	eval := evaluator.Eval(program, env)
 	if eval != nil {
 		fmt.Fprintln(out, eval.Inspect())
 	}
