@@ -1,0 +1,5 @@
+let firstName = "Jakub";
+let lastName = "Mazur";
+let fullName = fn(first, last){ first + " " + last};
+
+fullName(firstName, lastName);
