@@ -105,7 +105,7 @@ type Array struct {
 	Elements []Object
 }
 
-func (a *Array) Type() ObjectType { return STRING_OBJ }
+func (a *Array) Type() ObjectType { return ARRAY_OBJ }
 func (a *Array) Inspect() string {
 	var out bytes.Buffer
 

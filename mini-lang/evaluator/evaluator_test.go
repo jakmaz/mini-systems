@@ -58,6 +58,40 @@ func testIntegerObject(t *testing.T, obj object.Object, expected int64) bool {
 	return true
 }
 
+func testArrayObject(t *testing.T, obj object.Object, expected []any) bool {
+	result, ok := obj.(*object.Array)
+	if !ok {
+		t.Errorf("object is not Array. got=%T (%+v)", obj, obj)
+		return false
+	}
+	if len(result.Elements) != len(expected) {
+		t.Errorf("object has wrong length. got=%d, want=%d", len(result.Elements), len(expected))
+		return false
+	}
+
+	for i, e := range result.Elements {
+		switch expected[i].(type) {
+		case int:
+			testIntegerObject(t, e, int64(expected[i].(int)))
+		case string:
+			testStringObject(t, e, expected[i].(string))
+		}
+	}
+
+	return true
+}
+
+func testStringObject(t *testing.T, e object.Object, s string) {
+	result, ok := e.(*object.String)
+	if !ok {
+		t.Errorf("object is not String. got=%T (%+v)", e, e)
+		return
+	}
+	if result.Value != s {
+		t.Errorf("object has wrong value. got=%q, want=%q", result.Value, s)
+	}
+}
+
 func TestEvalBooleanExpression(t *testing.T) {
 	tests := []struct {
 		input    string
@@ -337,13 +371,18 @@ func TestStringConcatenation(t *testing.T) {
 func TestBuiltinFunctions(t *testing.T) {
 	tests := []struct {
 		input    string
-		expected interface{}
+		expected any
 	}{
 		{`len("")`, 0},
 		{`len("four")`, 4},
 		{`len("hello world")`, 11},
 		{`len(1)`, "argument to `len` not supported, got INTEGER"},
 		{`len("one", "two")`, "wrong number of arguments. got=2, want=1"},
+		{`len([0, 1, 2])`, 3},
+		{`first([0, 1, 2])`, 0},
+		{`last([0, 1, 2])`, 2},
+		{`rest([0, 1, 2])`, []any{1, 2}},
+		{`push([0, 1, 2], 3)`, []any{0, 1, 2, 3}},
 	}
 
 	for _, tt := range tests {
@@ -363,6 +402,8 @@ func TestBuiltinFunctions(t *testing.T) {
 				t.Errorf("wrong error message. expected=%q, got=%q",
 					expected, errObj.Message)
 			}
+		case []any:
+			testArrayObject(t, evaluated, expected)
 		}
 	}
 }
