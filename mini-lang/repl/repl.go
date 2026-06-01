@@ -187,7 +187,7 @@ func printRun(line string, out io.Writer) {
 		return
 	}
 
-	result := v.StackTop()
+	result := v.LastPoppedStackElem()
 	if result != nil {
 		fmt.Fprintln(out, result.Inspect())
 	}

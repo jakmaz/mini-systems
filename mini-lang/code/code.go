@@ -8,6 +8,25 @@ import (
 
 type Instructions []byte
 
+type Opcode byte
+
+const (
+	OpConstant Opcode = iota
+	OpAdd
+	OpPop
+)
+
+type Definition struct {
+	Name          string
+	OperandWidths []int
+}
+
+var definitions = map[Opcode]*Definition{
+	OpConstant: {"OpConstant", []int{2}},
+	OpAdd:      {"OpAdd", []int{}},
+	OpPop:      {"OpPop", []int{}},
+}
+
 func (ins Instructions) String() string {
 	var out bytes.Buffer
 
@@ -45,23 +64,6 @@ func (ins Instructions) fmtInstruction(def *Definition, operands []int) string {
 	}
 
 	return fmt.Sprintf("ERROR: unhandled operandCount for %s\n", def.Name)
-}
-
-type Opcode byte
-
-const (
-	OpConstant Opcode = iota
-	OpAdd
-)
-
-type Definition struct {
-	Name          string
-	OperandWidths []int
-}
-
-var definitions = map[Opcode]*Definition{
-	OpConstant: {"OpConstant", []int{2}},
-	OpAdd:      {"OpAdd", []int{}},
 }
 
 func Lookup(op byte) (*Definition, error) {
