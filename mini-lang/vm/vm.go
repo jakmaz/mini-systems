@@ -73,8 +73,44 @@ func (vm *VM) Run() error {
 			if err != nil {
 				return err
 			}
+		case code.OpMinus:
+			err := vm.executeMinusOperator()
+			if err != nil {
+				return err
+			}
+		case code.OpNot:
+			err := vm.executeNotOperator()
+			if err != nil {
+				return err
+			}
 		}
 	}
+
+	return nil
+}
+
+func (vm *VM) executeNotOperator() error {
+	operand := vm.pop()
+
+	switch operand {
+	case True:
+		return vm.push(False)
+	case False:
+		return vm.push(True)
+	default:
+		return vm.push(False)
+	}
+}
+
+func (vm *VM) executeMinusOperator() error {
+	operand := vm.pop()
+
+	if operand.Type() != object.INTEGER_OBJ {
+		return fmt.Errorf("unsupported type for negation: %s", operand.Type())
+	}
+
+	value := operand.(*object.Integer).Value
+	return vm.push(&object.Integer{Value: -value})
 
 	return nil
 }
