@@ -8,13 +8,14 @@ Most projects are written in Go and are intentionally scoped to remain readable 
 
 ## Projects
 
-| Project                     | Description                                                                 | Status   |
-| --------------------------- | --------------------------------------------------------------------------- | -------- |
-| **[mini-lang](mini-lang/)** | A small interpreted programming language                                    | Building |
-| **[mini-git](mini-git/)**   | A minimal implementation of Git's core data model (objects, trees, commits) | Planned  |
-| **[mini-bash](mini-bash/)** | A tiny Unix shell supporting command execution, pipes, and redirection      | Planned  |
-| **[mini-zip](mini-zip/)**   | A simple compression tool implementing classic compression algorithms       | Planned  |
-| **[mini-term](mini-term/)** | A minimal terminal emulato                                                  | Planned  |
+| Project                     | Description                                                                 | Language   | Status   |
+| --------------------------- | --------------------------------------------------------------------------- | ---------- | -------- |
+| **[mini-lang](mini-lang/)** | A small interpreted programming language                                    | Go         | Building |
+| **[mini-react](mini-react/)**| A minimal React-like UI library based on 'Build your own React'             | TypeScript | Planned  |
+| **[mini-git](mini-git/)**   | A minimal implementation of Git's core data model (objects, trees, commits) | Go         | Planned  |
+| **[mini-bash](mini-bash/)** | A tiny Unix shell supporting command execution, pipes, and redirection      | Go         | Planned  |
+| **[mini-zip](mini-zip/)**   | A simple compression tool implementing classic compression algorithms       | Go         | Planned  |
+| **[mini-term](mini-term/)** | A minimal terminal emulato                                                  | Go         | Planned  |
 
 > Each project lives in its own directory and is intentionally scoped to remain readable and focused.
 
