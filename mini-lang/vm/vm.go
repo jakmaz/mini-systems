@@ -111,8 +111,6 @@ func (vm *VM) executeMinusOperator() error {
 
 	value := operand.(*object.Integer).Value
 	return vm.push(&object.Integer{Value: -value})
-
-	return nil
 }
 
 func (vm *VM) excuteComparision(op code.Opcode) error {
