@@ -42,6 +42,10 @@ func Start(in io.Reader, out io.Writer) {
 	env := object.NewEnvironment()
 	m := modeEval
 
+	constants := []object.Object{}
+	globals := make([]object.Object, vm.GlobalsSize)
+	symbolTable := compiler.NewSymbolTable()
+
 	for {
 		fmt.Fprint(out, prompt)
 		if !scanner.Scan() {
@@ -65,9 +69,9 @@ func Start(in io.Reader, out io.Writer) {
 		case modeEval:
 			printEval(line, out, env)
 		case modeCompile:
-			printCompile(line, out)
+			printCompile(line, out, symbolTable, &constants)
 		case modeRun:
-			printRun(line, out)
+			printRun(line, out, symbolTable, &constants, globals)
 		}
 	}
 
@@ -151,36 +155,38 @@ func printEval(line string, out io.Writer, env *object.Environment) {
 	}
 }
 
-func printCompile(line string, out io.Writer) {
+func printCompile(line string, out io.Writer, symbolTable *compiler.SymbolTable, constants *[]object.Object) {
 	program, ok := parseLine(line, out)
 	if !ok {
 		return
 	}
 
-	c := compiler.New()
+	c := compiler.NewWithState(symbolTable, *constants)
 	err := c.Compile(program)
 	if err != nil {
 		fmt.Fprintln(out, err)
 		return
 	}
 
+	*constants = c.Bytecode().Constants
 	fmt.Fprintln(out, c.Bytecode().Instructions)
 }
 
-func printRun(line string, out io.Writer) {
+func printRun(line string, out io.Writer, symbolTable *compiler.SymbolTable, constants *[]object.Object, globals []object.Object) {
 	program, ok := parseLine(line, out)
 	if !ok {
 		return
 	}
 
-	c := compiler.New()
+	c := compiler.NewWithState(symbolTable, *constants)
 	err := c.Compile(program)
 	if err != nil {
 		fmt.Fprintf(out, "Woops! Compilation failed:\n %s\n", err)
 		return
 	}
 
-	v := vm.New(c.Bytecode())
+	*constants = c.Bytecode().Constants
+	v := vm.NewWithGlobalsStore(c.Bytecode(), globals)
 	err = v.Run()
 	if err != nil {
 		fmt.Fprintf(out, "Woops! Executing bytecode failed:\n %s\n", err)
