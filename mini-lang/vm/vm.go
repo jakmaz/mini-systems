@@ -59,6 +59,10 @@ func (vm *VM) StackTop() object.Object {
 	return vm.stack[vm.sp-1]
 }
 
+func (vm *VM) LastPoppedStackElem() object.Object {
+	return vm.stack[vm.sp]
+}
+
 func (vm *VM) Run() error {
 	var ip int
 	var ins code.Instructions
@@ -99,7 +103,7 @@ func (vm *VM) Run() error {
 		case code.OpPop:
 			vm.pop()
 		case code.OpEqual, code.OpNotEqual, code.OpGreaterThan:
-			err := vm.excuteComparision(op)
+			err := vm.executeComparison(op)
 			if err != nil {
 				return err
 			}
@@ -411,7 +415,7 @@ func (vm *VM) executeMinusOperator() error {
 	return vm.push(&object.Integer{Value: -value})
 }
 
-func (vm *VM) excuteComparision(op code.Opcode) error {
+func (vm *VM) executeComparison(op code.Opcode) error {
 	right := vm.pop()
 	left := vm.pop()
 
@@ -509,10 +513,6 @@ func (vm *VM) executeBinaryIntegerOperation(op code.Opcode, left, right object.O
 	}
 
 	return vm.push(&object.Integer{Value: result})
-}
-
-func (vm *VM) LastPoppedStackElem() object.Object {
-	return vm.stack[vm.sp]
 }
 
 func (vm *VM) push(obj object.Object) error {
