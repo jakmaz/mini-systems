@@ -1,7 +1,6 @@
 package object
 
 import (
-	"bytes"
 	"fmt"
 	"hash/fnv"
 	"minilang/ast"
@@ -94,7 +93,7 @@ type Function struct {
 
 func (f *Function) Type() ObjectType { return FUNCTION_OBJ }
 func (f *Function) Inspect() string {
-	var out bytes.Buffer
+	var out strings.Builder
 
 	params := []string{}
 	for _, p := range f.Parameters {
@@ -137,7 +136,7 @@ type Array struct {
 
 func (a *Array) Type() ObjectType { return ARRAY_OBJ }
 func (a *Array) Inspect() string {
-	var out bytes.Buffer
+	var out strings.Builder
 
 	elements := []string{}
 	for _, e := range a.Elements {
@@ -162,7 +161,7 @@ type Hash struct {
 
 func (h *Hash) Type() ObjectType { return HASH_OBJ }
 func (h *Hash) Inspect() string {
-	var out bytes.Buffer
+	var out strings.Builder
 
 	pairs := []string{}
 	for _, pair := range h.Pairs {
